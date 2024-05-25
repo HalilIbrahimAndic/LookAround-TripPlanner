@@ -11,7 +11,7 @@ import SwiftUI
 struct LookAroundApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StartTab()
         }
     }
 }
