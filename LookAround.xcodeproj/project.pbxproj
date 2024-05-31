@@ -13,6 +13,7 @@
 		A8F1DF652C0299EF008ED931 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F1DF642C0299EF008ED931 /* Preview Assets.xcassets */; };
 		A8F1DF6C2C02AF71008ED931 /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1DF6B2C02AF71008ED931 /* TripMapView.swift */; };
 		A8F1DF702C02B002008ED931 /* DestinationLocationsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1DF6F2C02B002008ED931 /* DestinationLocationsMapView.swift */; };
+		A8F1DF732C034FED008ED931 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8F1DF722C034FED008ED931 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		A8F1DF642C0299EF008ED931 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A8F1DF6B2C02AF71008ED931 /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
 		A8F1DF6F2C02B002008ED931 /* DestinationLocationsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationLocationsMapView.swift; sourceTree = "<group>"; };
+		A8F1DF722C034FED008ED931 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				A8F1DF6D2C02AFD5008ED931 /* TripMapTab */,
 				A8F1DF612C0299EF008ED931 /* Assets.xcassets */,
 				A8F1DF632C0299EF008ED931 /* Preview Content */,
+				A8F1DF722C034FED008ED931 /* LaunchScreen.storyboard */,
 			);
 			path = LookAround;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8F1DF732C034FED008ED931 /* LaunchScreen.storyboard in Resources */,
 				A8F1DF652C0299EF008ED931 /* Preview Assets.xcassets in Resources */,
 				A8F1DF622C0299EF008ED931 /* Assets.xcassets in Resources */,
 			);
@@ -304,6 +308,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -339,6 +344,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
