@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct LookAroundApp: App {
@@ -13,5 +14,6 @@ struct LookAroundApp: App {
         WindowGroup {
             StartTab()
         }
+        .modelContainer(for: Destination.self)
     }
 }

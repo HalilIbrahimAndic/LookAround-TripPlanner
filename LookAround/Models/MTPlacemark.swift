@@ -14,7 +14,7 @@ class MTPlacemark {
     var address: String
     var latitude: Double
     var longitude: Double
-    var destination: Destination
+    var destination: Destination?
     
     init(name: String, address: String, latitude: Double, longitude: Double) {
         self.name = name

@@ -15,6 +15,8 @@ class Destination {
     var longitude: Double?
     var latitudeDelta: Double?
     var longitudeDelta: Double?
+    @Relationship(deleteRule: .cascade)
+    var placemarks: [MTPlacemark] = []
     
     init(name: String, latitude: Double? = nil, longitude: Double? = nil, latitudeDelta: Double? = nil, longitudeDelta: Double? = nil) {
         self.name = name
@@ -33,5 +35,18 @@ class Destination {
         } else {
             return nil
         }
+    }
+}
+
+extension Destination {
+    @MainActor
+    static var preview: ModelContainer{
+        let container = try! ModelContainer(
+            for: Destination.self,
+            configurations: ModelConfiguration(
+                isStoredInMemoryOnly: true
+            )
+        )
+        return container
     }
 }
