@@ -9,7 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct DestinationListView: View {
+    @Environment(\.modelContext) private var modelContext
     @Query(sort: \Destination.name) private var destinations: [Destination]
+    @State private var newDestination = false
+    @State private var destinationName = ""
     var body: some View {
         NavigationStack {
             Group {
@@ -26,6 +29,14 @@ struct DestinationListView: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                modelContext.delete(destination)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+
+                        }
                     }
                 } else {
                     ContentUnavailableView(
@@ -38,11 +49,31 @@ struct DestinationListView: View {
             .navigationTitle("My Destinations")
             .toolbar {
                 Button(action: {
-                    
+                    newDestination.toggle()
                 }, label: {
                     Image(systemName: "plus.circle.fill")
                         .tint(.orange)
                 })
+                // Alert
+                .alert("Enter New Destination Name", isPresented: $newDestination) {
+                    // Alert Components
+                    TextField("Enter destination name", text: $destinationName)
+                    
+                    Button("OK") {
+                        if !destinationName.isEmpty {
+                            let destination = Destination(name: destinationName)
+                            modelContext.insert(destination)
+                            destinationName = ""
+                        }
+                    }
+                    
+                    Button("Cancel", role: .cancel) {
+                        destinationName = ""
+                    }
+                } message: {
+                    Text("Create a new destination")
+                }
+
             }
         }
     }
