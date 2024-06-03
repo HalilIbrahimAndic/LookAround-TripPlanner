@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A81B8DB12C0D1564006B9AE2 /* SampleLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B8DB02C0D1564006B9AE2 /* SampleLocations.swift */; };
 		A8F1DF5E2C0299EC008ED931 /* LookAroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1DF5D2C0299EC008ED931 /* LookAroundApp.swift */; };
 		A8F1DF602C0299EC008ED931 /* StartTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1DF5F2C0299EC008ED931 /* StartTab.swift */; };
 		A8F1DF622C0299EF008ED931 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8F1DF612C0299EF008ED931 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A81B8DB02C0D1564006B9AE2 /* SampleLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleLocations.swift; sourceTree = "<group>"; };
 		A8F1DF5A2C0299EC008ED931 /* LookAround.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LookAround.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8F1DF5D2C0299EC008ED931 /* LookAroundApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookAroundApp.swift; sourceTree = "<group>"; };
 		A8F1DF5F2C0299EC008ED931 /* StartTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTab.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				A8F1DF612C0299EF008ED931 /* Assets.xcassets */,
 				A8F1DF632C0299EF008ED931 /* Preview Content */,
 				A8F1DF722C034FED008ED931 /* LaunchScreen.storyboard */,
+				A81B8DB02C0D1564006B9AE2 /* SampleLocations.swift */,
 			);
 			path = LookAround;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A81B8DB12C0D1564006B9AE2 /* SampleLocations.swift in Sources */,
 				A8F1DF602C0299EC008ED931 /* StartTab.swift in Sources */,
 				A8F1DF702C02B002008ED931 /* DestinationLocationsMapView.swift in Sources */,
 				A8F1DF5E2C0299EC008ED931 /* LookAroundApp.swift in Sources */,
