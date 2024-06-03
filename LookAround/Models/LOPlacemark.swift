@@ -22,4 +22,8 @@ class LOPlacemark {
         self.latitude = latitude
         self.longitude = longitude
     }
+    
+    var coordinate: CLLocationCoordinate2D {
+        .init(latitude: latitude, longitude: longitude)
+    }
 }

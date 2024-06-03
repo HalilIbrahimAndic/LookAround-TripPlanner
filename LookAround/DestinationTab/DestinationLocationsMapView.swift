@@ -18,7 +18,14 @@ struct DestinationLocationsMapView: View {
     
     var body: some View {
         Map(position: $cameraPosition) {
-            
+            if let destination {
+                ForEach(destination.placemarks) { placemark in
+                    Marker(coordinate: placemark.coordinate) {
+                        Label(placemark.name, systemImage: "star")
+                    }
+                    .tint(.yellow)
+                }
+            }
         }
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
