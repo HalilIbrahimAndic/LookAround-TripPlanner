@@ -16,7 +16,7 @@ class Destination {
     var latitudeDelta: Double?
     var longitudeDelta: Double?
     @Relationship(deleteRule: .cascade)
-    var placemarks: [MTPlacemark] = []
+    var placemarks: [LOPlacemark] = []
     
     init(name: String, latitude: Double? = nil, longitude: Double? = nil, latitudeDelta: Double? = nil, longitudeDelta: Double? = nil) {
         self.name = name
@@ -47,6 +47,31 @@ extension Destination {
                 isStoredInMemoryOnly: true
             )
         )
+
+        let coordinate = Destination(
+            name: "Paris",
+            latitude: 48.856788,
+            longitude: 2.351077,
+            latitudeDelta: 0.15,
+            longitudeDelta: 0.15
+        )
+        container.mainContext.insert(coordinate)
+        
+        var placeMarks: [LOPlacemark] {
+            [
+                LOPlacemark(name: "Louvre Museum", address: "93 Rue de Rivoli, 75001 Paris, France", latitude: 48.861950, longitude: 2.336902),
+                LOPlacemark(name: "Sacré-Coeur Basilica", address: "Parvis du Sacré-Cœur, 75018 Paris, France", latitude: 48.886634, longitude: 2.343048),
+                LOPlacemark(name: "Eiffel Tower", address: "5 Avenue Anatole France, 75007 Paris, France", latitude: 48.858258, longitude: 2.294488),
+                LOPlacemark(name: "Moulin Rouge", address: "82 Boulevard de Clichy, 75018 Paris, France", latitude: 48.884134, longitude: 2.332196),
+                LOPlacemark(name: "Arc de Triomphe", address: "Place Charles de Gaulle, 75017 Paris, France", latitude: 48.873776, longitude: 2.295043),
+                LOPlacemark(name: "Gare Du Nord", address: "Paris, France", latitude: 48.880071, longitude: 2.354977),
+                LOPlacemark(name: "Notre Dame Cathedral", address: "6 Rue du Cloître Notre-Dame, 75004 Paris, France", latitude: 48.852972, longitude: 2.350004),
+                LOPlacemark(name: "Panthéon", address: "Place du Panthéon, 75005 Paris, France", latitude: 48.845616, longitude: 2.345996),
+            ]
+        }
+        placeMarks.forEach { placemark in
+            coordinate.placemarks.append(placemark)
+        }
         return container
     }
 }
