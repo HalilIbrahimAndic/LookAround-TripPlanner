@@ -13,20 +13,23 @@ struct DestinationListView: View {
     @Query(sort: \Destination.name) private var destinations: [Destination]
     @State private var newDestination = false
     @State private var destinationName = ""
+    @State private var path = NavigationPath()
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             Group {
                 if !destinations.isEmpty{
                     List(destinations) { destination in
-                        HStack {
-                            Image(systemName: "globe")
-                                .imageScale(.large)
-                                .foregroundStyle(.orange)
-                            VStack(alignment: .leading) {
-                                Text(destination.name)
-                                Text("^[\(destination.placemarks.count) location](inflect: true)")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                        NavigationLink(value: destination) {
+                            HStack {
+                                Image(systemName: "globe")
+                                    .imageScale(.large)
+                                    .foregroundStyle(.orange)
+                                VStack(alignment: .leading) {
+                                    Text(destination.name)
+                                    Text("^[\(destination.placemarks.count) location](inflect: true)")
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                         }
                         .swipeActions(edge: .trailing) {
@@ -37,6 +40,9 @@ struct DestinationListView: View {
                             }
 
                         }
+                    }
+                    .navigationDestination(for: Destination.self) { destination in
+                        DestinationLocationsMapView(destination: destination)
                     }
                 } else {
                     ContentUnavailableView(
@@ -64,6 +70,7 @@ struct DestinationListView: View {
                             let destination = Destination(name: destinationName)
                             modelContext.insert(destination)
                             destinationName = ""
+                            path.append(destination)
                         }
                     }
                     
