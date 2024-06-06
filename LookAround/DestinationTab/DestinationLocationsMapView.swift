@@ -25,29 +25,64 @@ struct DestinationLocationsMapView: View {
     // Incoming destination (e.g. Rome, İstanbul)
     var destination: Destination
     
+    @State private var isManualMarker = false
     @State private var selectedPlacemark: LAPlacemark?
     var body: some View {
         @Bindable var destination = destination
-
+        
         // MARK: - Map
-        Map(position: $cameraPosition, selection: $selectedPlacemark) {
-            ForEach(listPlacemarks) { placemark in
-                Group {
-                    if placemark.destination != nil {
-                        Marker(coordinate: placemark.coordinate) {
-                            Label(placemark.name, systemImage: "pin")
+        MapReader { proxy in
+            Map(position: $cameraPosition, selection: $selectedPlacemark) {
+                ForEach(listPlacemarks) { placemark in
+                    if isManualMarker {
+                        Group {
+                            if placemark.destination != nil {
+                                Marker(coordinate: placemark.coordinate) {
+                                    Label(placemark.name, systemImage: "pin")
+                                }
+                                .tint(.main)
+                            } else {
+                                Marker(placemark.name, coordinate: placemark.coordinate)
+                            }
                         }
-                        .tint(.main)
                     } else {
-                        Marker(placemark.name, coordinate: placemark.coordinate)
+                        Group {
+                            if placemark.destination != nil {
+                                Marker(coordinate: placemark.coordinate) {
+                                    Label(placemark.name, systemImage: "pin")
+                                }
+                                .tint(.main)
+                            } else {
+                                Marker(placemark.name, coordinate: placemark.coordinate)
+                            }
+                        }.tag(placemark)
                     }
-                }.tag(placemark)
+                    
+                }
+            }
+            // New Placemark
+            .onTapGesture { position in
+                if isManualMarker {
+                    if let coordinate = proxy.convert(position, from: .local) {
+                        let newPlacemark = LAPlacemark(
+                            name: "",
+                            address: "",
+                            latitude: coordinate.latitude,
+                            longitude: coordinate.longitude
+                        )
+                        modelContext.insert(newPlacemark)
+                        selectedPlacemark = newPlacemark
+                    }
+                }
             }
         }
         // Bottom Sheet
         .sheet(item: $selectedPlacemark,
-               content: {
-            selectedPlacemark in
+               onDismiss: {
+            if isManualMarker {
+                MapManager.removeSearchResults(modelContext)
+            }
+        }, content: { selectedPlacemark in
             LocationDetailView(
                 destination: destination,
                 selectedPlacemark: selectedPlacemark
@@ -57,47 +92,66 @@ struct DestinationLocationsMapView: View {
         // Search
         .safeAreaInset(edge: .top,
                        content: {
-            HStack {
-                TextField("Search...", text: $searchText)
-                    .autocorrectionDisabled()
-                    .textInputAutocapitalization(.never)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($searchFieldFocus)
-                    .overlay(alignment: .trailing) {
-                        if searchFieldFocus {
-                            Button {
-                                searchText = ""
-                                searchFieldFocus = false
-                            } label: {
-                                Image(systemName: "xmark.circle.fill")
+            VStack {
+                if !isManualMarker {
+                    HStack {
+                        TextField("Search...", text: $searchText)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                            .textFieldStyle(.roundedBorder)
+                            .focused($searchFieldFocus)
+                            .overlay(alignment: .trailing) {
+                                if searchFieldFocus {
+                                    Button {
+                                        searchText = ""
+                                        searchFieldFocus = false
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                    }
+                                    .offset(x: -5)
+                                }
                             }
-                            .offset(x: -5)
+                            .onSubmit {
+                                Task {
+                                    await MapManager.searchPlaces(modelContext,
+                                                                  searchText: searchText,
+                                                                  visibleRegion: visibleRegion)
+                                    searchText = ""
+                                    cameraPosition = .automatic
+                                }
+                            }
+                        
+                        if !searchPlacemarks.isEmpty {
+                            Button(action: {
+                                MapManager.removeSearchResults(modelContext)
+                            }, label: {
+                                Image(systemName: "mappin.slash.circle.fill")
+                                    .imageScale(.large)
+                            })
+                            .foregroundStyle(.white)
+                            .padding(8)
+                            .background(.red)
+                            .clipShape(.circle)
                         }
                     }
-                    .onSubmit {
-                        Task {
-                            await MapManager.searchPlaces(modelContext,
-                                                          searchText: searchText,
-                                                          visibleRegion: visibleRegion)
-                            searchText = ""
-                            cameraPosition = .automatic
-                        }
-                    }
+                    .padding()
+                }
                 
-                if !searchPlacemarks.isEmpty {
-                    Button(action: {
-                        MapManager.removeSearchResults(modelContext)
-                    }, label: {
-                        Image(systemName: "mappin.slash.circle.fill")
+                HStack {
+                    Spacer()
+                    Toggle(isOn: $isManualMarker) {
+                        Image(systemName: isManualMarker ? "mappin.circle" : "mappin.slash.circle")
+                            .tint(isManualMarker ? .red : .gray)
                             .imageScale(.large)
-                    })
-                    .foregroundStyle(.white)
-                    .padding(8)
-                    .background(.red)
-                    .clipShape(.circle)
+                    }
+                    .toggleStyle(.button)
+                    .background(in: Circle())
+                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 15))
+                    .onChange(of: isManualMarker) {
+                        MapManager.removeSearchResults(modelContext)
+                    }
                 }
             }
-            .padding()
         })
         // Set region
         .safeAreaInset(edge: .bottom, content: {
