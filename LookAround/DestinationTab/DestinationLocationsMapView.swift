@@ -96,7 +96,7 @@ struct DestinationLocationsMapView: View {
                         destination.longitudeDelta = visibleRegion.span.longitudeDelta
                     }
                 }
-                .tint(.green)
+                .tint(.main)
                 .buttonStyle(.borderedProminent)
             }
             .padding(EdgeInsets(top: 0, leading: 25, bottom: 10, trailing: 25))
