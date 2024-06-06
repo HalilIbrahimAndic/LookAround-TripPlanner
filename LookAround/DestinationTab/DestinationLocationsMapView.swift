@@ -35,9 +35,9 @@ struct DestinationLocationsMapView: View {
                 Group {
                     if placemark.destination != nil {
                         Marker(coordinate: placemark.coordinate) {
-                            Label(placemark.name, systemImage: "star")
+                            Label(placemark.name, systemImage: "pin")
                         }
-                        .tint(.yellow)
+                        .tint(.main)
                     } else {
                         Marker(placemark.name, coordinate: placemark.coordinate)
                     }
@@ -45,9 +45,14 @@ struct DestinationLocationsMapView: View {
             }
         }
         // Bottom Sheet
-        .sheet(item: $selectedPlacemark, content: { selectedPlacemark in
-            Text(selectedPlacemark.name)
-                .presentationDetents([.height(450)])
+        .sheet(item: $selectedPlacemark,
+               content: {
+            selectedPlacemark in
+            LocationDetailView(
+                destination: destination,
+                selectedPlacemark: selectedPlacemark
+            )
+            .presentationDetents([.height(450)])
         })
         // Search
         .safeAreaInset(edge: .top,

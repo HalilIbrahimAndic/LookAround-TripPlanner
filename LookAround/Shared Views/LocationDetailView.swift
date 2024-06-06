@@ -16,6 +16,7 @@ struct LocationDetailView: View {
     
     @State private var name = ""
     @State private var address = ""
+    @State private var lookAroundScene: MKLookAroundScene?
     
     var isChanged: Bool {
         guard let selectedPlacemark else { return false }
@@ -24,23 +25,25 @@ struct LocationDetailView: View {
     
     var body: some View {
         VStack {
+            // Name & Address
             HStack {
                 VStack(alignment: .leading, content: {
                     TextField("Name", text: $name)
                         .font(.title)
-                    TextField("Name", text: $address, axis: .vertical)
+                    TextField("Address", text: $address, axis: .vertical)
+                    if isChanged {
+                        Button("Update") {
+                            selectedPlacemark?.name = name
+                                .trimmingCharacters(in: .whitespacesAndNewlines)
+                            selectedPlacemark?.address = address
+                                .trimmingCharacters(in: .whitespacesAndNewlines)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .buttonStyle(.borderedProminent)
+                    }
                 })
                 .textFieldStyle(.roundedBorder)
-                if isChanged {
-                    Button("Update") {
-                        selectedPlacemark?.name = name
-                            .trimmingCharacters(in: .whitespacesAndNewlines)
-                        selectedPlacemark?.address = address
-                            .trimmingCharacters(in: .whitespacesAndNewlines)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .buttonStyle(.borderedProminent)
-                }
+                
                 Spacer()
                 Button(action: {
                     dismiss()
@@ -51,6 +54,15 @@ struct LocationDetailView: View {
                 })
             }
             
+            if let lookAroundScene {
+                LookAroundPreview(initialScene: lookAroundScene)
+                    .frame(height: 200)
+                    .padding()
+            } else {
+                ContentUnavailableView("No LookAround Available", systemImage: "eye.slash")
+            }
+            
+            // Add/Remove Button
             HStack {
                 Spacer()
                 if let destination {
@@ -76,12 +88,23 @@ struct LocationDetailView: View {
             Spacer()
         }
         .padding()
-            .onAppear {
-                if let selectedPlacemark, destination != nil {
-                    name = selectedPlacemark.name
-                    address = selectedPlacemark.address
-                }
+        .task(id: selectedPlacemark, {
+            await fetchLookAroundPreview()
+        })
+        .onAppear {
+            if let selectedPlacemark, destination != nil {
+                name = selectedPlacemark.name
+                address = selectedPlacemark.address
             }
+        }
+    }
+    
+    func fetchLookAroundPreview() async {
+        if let selectedPlacemark {
+            lookAroundScene = nil
+            let lookAroundRequest = MKLookAroundSceneRequest(coordinate: selectedPlacemark.coordinate)
+            lookAroundScene = try? await lookAroundRequest.scene
+        }
     }
 }
 
