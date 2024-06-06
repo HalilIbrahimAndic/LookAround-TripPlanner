@@ -22,7 +22,7 @@ enum MapManager {
         let searchItems = try? await MKLocalSearch(request: request).start()
         let results = searchItems?.mapItems ?? []
         results.forEach {
-            let loPlacemark = LOPlacemark(
+            let loPlacemark = LAPlacemark(
                 name: $0.placemark.name ?? "",
                 address: $0.placemark.title ?? "",
                 latitude: $0.placemark.coordinate.latitude,
@@ -33,7 +33,7 @@ enum MapManager {
     }
     
     static func removeSearchResults(_ modelContext: ModelContext) {
-        let searchPredicate = #Predicate<LOPlacemark> { $0.destination == nil }
-        try? modelContext.delete(model: LOPlacemark.self, where: searchPredicate)
+        let searchPredicate = #Predicate<LAPlacemark> { $0.destination == nil }
+        try? modelContext.delete(model: LAPlacemark.self, where: searchPredicate)
     }
 }

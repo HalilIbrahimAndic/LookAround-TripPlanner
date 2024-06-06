@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A81B8DB12C0D1564006B9AE2 /* SampleLocations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B8DB02C0D1564006B9AE2 /* SampleLocations.swift */; };
 		A81B8DB42C0D7A5A006B9AE2 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B8DB32C0D7A5A006B9AE2 /* Destination.swift */; };
-		A81B8DB62C0D7B6E006B9AE2 /* LOPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B8DB52C0D7B6E006B9AE2 /* LOPlacemark.swift */; };
+		A81B8DB62C0D7B6E006B9AE2 /* LAPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81B8DB52C0D7B6E006B9AE2 /* LAPlacemark.swift */; };
 		A88490C12C0E587C00897A9A /* MapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88490C02C0E587C00897A9A /* MapManager.swift */; };
 		A8D9B6F42C0D921F007AACA3 /* DestinationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D9B6F32C0D921F007AACA3 /* DestinationListView.swift */; };
 		A8F1DF5E2C0299EC008ED931 /* LookAroundApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1DF5D2C0299EC008ED931 /* LookAroundApp.swift */; };
@@ -24,7 +24,7 @@
 /* Begin PBXFileReference section */
 		A81B8DB02C0D1564006B9AE2 /* SampleLocations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleLocations.swift; sourceTree = "<group>"; };
 		A81B8DB32C0D7A5A006B9AE2 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
-		A81B8DB52C0D7B6E006B9AE2 /* LOPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LOPlacemark.swift; sourceTree = "<group>"; };
+		A81B8DB52C0D7B6E006B9AE2 /* LAPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LAPlacemark.swift; sourceTree = "<group>"; };
 		A88490C02C0E587C00897A9A /* MapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapManager.swift; sourceTree = "<group>"; };
 		A8D9B6F32C0D921F007AACA3 /* DestinationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationListView.swift; sourceTree = "<group>"; };
 		A8F1DF5A2C0299EC008ED931 /* LookAround.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LookAround.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				A81B8DB32C0D7A5A006B9AE2 /* Destination.swift */,
-				A81B8DB52C0D7B6E006B9AE2 /* LOPlacemark.swift */,
+				A81B8DB52C0D7B6E006B9AE2 /* LAPlacemark.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -199,7 +199,7 @@
 				A81B8DB42C0D7A5A006B9AE2 /* Destination.swift in Sources */,
 				A8F1DF702C02B002008ED931 /* DestinationLocationsMapView.swift in Sources */,
 				A88490C12C0E587C00897A9A /* MapManager.swift in Sources */,
-				A81B8DB62C0D7B6E006B9AE2 /* LOPlacemark.swift in Sources */,
+				A81B8DB62C0D7B6E006B9AE2 /* LAPlacemark.swift in Sources */,
 				A8D9B6F42C0D921F007AACA3 /* DestinationListView.swift in Sources */,
 				A8F1DF5E2C0299EC008ED931 /* LookAroundApp.swift in Sources */,
 				A8F1DF6C2C02AF71008ED931 /* TripMapView.swift in Sources */,

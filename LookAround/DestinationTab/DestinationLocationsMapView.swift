@@ -15,32 +15,47 @@ struct DestinationLocationsMapView: View {
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var searchText = ""
     @FocusState private var searchFieldFocus: Bool
-    @Query(filter: #Predicate<LOPlacemark> {$0.destination == nil}) private var searchPlacemarks: [LOPlacemark]
+    // SwiftData'da destination'ı olmayan tüm placemarkları getir
+    @Query(filter: #Predicate<LAPlacemark> {$0.destination == nil}) private var searchPlacemarks: [LAPlacemark]
     
-    private var listPlacemarks: [LOPlacemark] {
+    // All placemarks
+    private var listPlacemarks: [LAPlacemark] {
         searchPlacemarks + destination.placemarks
     }
+    // Incoming destination (e.g. Rome, İstanbul)
     var destination: Destination
     
+    @State private var selectedPlacemark: LAPlacemark?
     var body: some View {
         @Bindable var destination = destination
 
-        Map(position: $cameraPosition) {
+        // MARK: - Map
+        Map(position: $cameraPosition, selection: $selectedPlacemark) {
             ForEach(listPlacemarks) { placemark in
-                if placemark.destination != nil {
-                    Marker(coordinate: placemark.coordinate) {
-                        Label(placemark.name, systemImage: "star")
+                Group {
+                    if placemark.destination != nil {
+                        Marker(coordinate: placemark.coordinate) {
+                            Label(placemark.name, systemImage: "star")
+                        }
+                        .tint(.yellow)
+                    } else {
+                        Marker(placemark.name, coordinate: placemark.coordinate)
                     }
-                    .tint(.yellow)
-                } else {
-                    Marker(placemark.name, coordinate: placemark.coordinate)
-                }
+                }.tag(placemark)
             }
         }
+        // Bottom Sheet
+        .sheet(item: $selectedPlacemark, content: { selectedPlacemark in
+            Text(selectedPlacemark.name)
+                .presentationDetents([.height(450)])
+        })
+        // Search
         .safeAreaInset(edge: .top,
                        content: {
             HStack {
                 TextField("Search...", text: $searchText)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
                     .textFieldStyle(.roundedBorder)
                     .focused($searchFieldFocus)
                     .overlay(alignment: .trailing) {
@@ -60,6 +75,7 @@ struct DestinationLocationsMapView: View {
                                                           searchText: searchText,
                                                           visibleRegion: visibleRegion)
                             searchText = ""
+                            cameraPosition = .automatic
                         }
                     }
                 
@@ -78,6 +94,7 @@ struct DestinationLocationsMapView: View {
             }
             .padding()
         })
+        // Set region
         .safeAreaInset(edge: .bottom, content: {
             HStack {
                 LabeledContent {
