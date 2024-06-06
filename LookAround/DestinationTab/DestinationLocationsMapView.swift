@@ -24,35 +24,7 @@ struct DestinationLocationsMapView: View {
     
     var body: some View {
         @Bindable var destination = destination
-        VStack {
-            LabeledContent {
-                TextField("Enter destination name", text: $destination.name)
-                    .textFieldStyle(.roundedBorder)
-                    .foregroundStyle(.primary)
-            } label: {
-                Text("Name")
-            }
-            .padding(.top)
-            
-            
-            HStack {
-                Text("Adjust the map to set the region for your destination")
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Button("Set region") {
-                    if let visibleRegion {
-                        destination.latitude = visibleRegion.center.latitude
-                        destination.longitude = visibleRegion.center.longitude
-                        destination.latitudeDelta = visibleRegion.span.latitudeDelta
-                        destination.longitudeDelta = visibleRegion.span.longitudeDelta
-                    }
-                }
-                .buttonStyle(.borderedProminent)
-            }
 
-        }
-        .padding(.horizontal)
-        
         Map(position: $cameraPosition) {
             ForEach(listPlacemarks) { placemark in
                 if placemark.destination != nil {
@@ -65,7 +37,7 @@ struct DestinationLocationsMapView: View {
                 }
             }
         }
-        .safeAreaInset(edge: .bottom,
+        .safeAreaInset(edge: .top,
                        content: {
             HStack {
                 TextField("Search...", text: $searchText)
@@ -105,6 +77,29 @@ struct DestinationLocationsMapView: View {
                 }
             }
             .padding()
+        })
+        .safeAreaInset(edge: .bottom, content: {
+            HStack {
+                LabeledContent {
+                    TextField("Enter destination name", text: $destination.name)
+                        .textFieldStyle(.roundedBorder)
+                        .foregroundStyle(.primary)
+                } label: {
+                    Text("")
+                }
+                
+                Button("Set region") {
+                    if let visibleRegion {
+                        destination.latitude = visibleRegion.center.latitude
+                        destination.longitude = visibleRegion.center.longitude
+                        destination.latitudeDelta = visibleRegion.span.latitudeDelta
+                        destination.longitudeDelta = visibleRegion.span.longitudeDelta
+                    }
+                }
+                .tint(.green)
+                .buttonStyle(.borderedProminent)
+            }
+            .padding(EdgeInsets(top: 0, leading: 25, bottom: 10, trailing: 25))
         })
         .navigationTitle("Destination")
         .navigationBarTitleDisplayMode(.inline)
