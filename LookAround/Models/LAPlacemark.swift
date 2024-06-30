@@ -9,7 +9,7 @@ import SwiftData
 import MapKit
 
 @Model
-class LOPlacemark {
+class LAPlacemark {
     var name: String
     var address: String
     var latitude: Double

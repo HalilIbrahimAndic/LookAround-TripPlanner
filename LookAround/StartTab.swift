@@ -16,12 +16,12 @@ struct StartTab: View {
                     .tabItem {
                         Label("Map", systemImage: "map")
                     }
-                DestinationLocationsMapView()
+                DestinationListView()
                     .tabItem {
                         Label("Destinations", systemImage: "globe.desk")
                     }
             }
-            .toolbarBackground(.blue.opacity(0.8), for: .tabBar)
+            .toolbarBackground(.main.opacity(0.8), for: .tabBar)
             .toolbarBackground(.visible, for: .tabBar)
             .toolbarColorScheme(.dark, for: .tabBar)
         }
@@ -30,4 +30,5 @@ struct StartTab: View {
 
 #Preview {
     StartTab()
+        .modelContainer(Destination.preview)
 }
